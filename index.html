@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACX — Marketing System</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --acx:#FF0000;--acx-2:#C90101;--acx-dim:#C90101;--navy:#1E293B;
+  --bg:#000000;--bg2:#0d1117;--bg3:#080d14;--bg4:#050810;
+  --border:#1E293B;--border2:#0f1825;
+  --t1:#FFFFFF;--t2:#EAE9E5;--t3:#9A9090;--t4:#78716C;--t5:#5D5D5D;
+  --green:#00d4aa;--blue:#4285F4;--purple:#a855f7;--amber:#f5a623;--danger:#e94560;
+  --font:'Manrope',sans-serif;--r:8px;--rl:12px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-size:17px;font-weight:800;color:#FFFFFF;margin-right:24px;white-space:nowrap;padding:15px 0;flex-shrink:0;letter-spacing:.04em}
+.nav-link{padding:15px 14px;font-size:13px;color:var(--t4);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;font-weight:500}
+.nav-link:hover,.nav-link.active{color:var(--t1);border-bottom-color:var(--acx)}
+
+/* HERO */
+.hero{padding:60px 28px 50px;max-width:880px;margin:0 auto}
+.hero-tag{display:inline-block;background:rgba(255,0,0,.12);border:1px solid rgba(255,0,0,.3);border-radius:20px;padding:4px 14px;font-size:11px;color:var(--acx);letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+.hero h1{font-size:46px;font-weight:800;color:var(--t1);line-height:1.12;margin-bottom:16px}
+.hero h1 span{color:var(--acx)}
+.hero p{font-size:16px;color:var(--t2);line-height:1.85;max-width:600px}
+.hero-pills{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.hero-pill{font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--t3);font-weight:500}
+
+/* SECTION */
+.section{max-width:880px;margin:0 auto;padding:0 28px 60px}
+.section-hd{margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border2)}
+.section-num{font-size:11px;color:var(--acx);font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
+.section-title{font-size:26px;font-weight:700;color:var(--t1);margin-bottom:5px}
+.section-sub{font-size:14px;color:var(--t3);line-height:1.7}
+.sdiv{height:1px;background:var(--border2);max-width:880px;margin:0 auto 52px}
+
+/* UTILITIES */
+.layer-lbl{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t5);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.layer-lbl::after{content:'';flex:1;height:1px;background:var(--border2)}
+.farrow{display:flex;flex-direction:column;align-items:center;padding:6px 0;gap:2px}
+.farrow-lbl{font-size:10px;color:var(--t5);letter-spacing:.1em;text-transform:uppercase}
+.farrow-ic{color:var(--t5);font-size:17px}
+.loop-b{text-align:center;margin-top:14px;padding:12px 18px;background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.14);border-radius:var(--r);font-size:12px;color:var(--green);line-height:1.8;font-weight:500}
+.insight-box{padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);font-size:13px;color:var(--t3);line-height:2}
+
+/* BRAND AWARENESS LAYER */
+.ba-layer{background:var(--bg3);border:1px solid rgba(245,166,35,.25);border-top:2px solid var(--amber);border-radius:var(--rl);padding:12px 14px;margin-bottom:5px}
+.ba-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:6px}
+.ba-title{font-size:13px;font-weight:700;color:var(--amber)}
+.ba-note{font-size:10px;color:var(--t4);font-style:italic}
+.ba-tags{display:flex;flex-wrap:wrap;gap:4px}
+.ba-tag{font-size:10px;padding:3px 9px;border-radius:10px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.2);color:var(--amber);font-weight:500}
+/* GBP HEALTH */
+.gbp-block{background:var(--bg3);border:1px solid rgba(52,168,83,.25);border-top:2px solid #34A853;border-radius:var(--rl);padding:11px 14px;margin-bottom:5px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.gbp-left{flex:1;min-width:160px}
+.gbp-title{font-size:13px;font-weight:700;color:#34A853;margin-bottom:3px}
+.gbp-sub{font-size:10px;color:var(--t4);line-height:1.55}
+.gbp-items{display:flex;gap:6px;flex-wrap:wrap}
+.gbp-item{font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(52,168,83,.1);border:1px solid rgba(52,168,83,.2);color:#34A853;font-weight:500}
+.gbp-prereq{font-size:10px;color:var(--danger);background:rgba(233,69,96,.08);border:1px solid rgba(233,69,96,.2);border-radius:6px;padding:4px 10px;white-space:nowrap;font-weight:600;align-self:center}
+.ct-stage-label{font-size:9px;font-weight:700;color:var(--t5);text-transform:uppercase;letter-spacing:.12em;margin:10px 0 5px;padding-top:9px;border-top:1px solid var(--border2)}
+.ct-stage-label:first-of-type{border-top:none;padding-top:0;margin-top:2px}
+/* CONVERGE */
+.converge-wrap{display:flex;align-items:center;justify-content:center;gap:0;padding:2px 0 0;height:32px;position:relative}
+.converge-arm{font-size:26px;color:var(--t5);line-height:1;flex:1;text-align:center}
+.converge-mid{flex:2;text-align:center}
+.converge-lbl{font-size:9px;color:var(--t5);letter-spacing:.1em;text-transform:uppercase}
+/* CRM ENTRY BLOCK */
+.crm-entry-block{background:var(--bg2);border:1px solid rgba(168,85,247,.3);border-top:2px solid #a855f7;border-radius:var(--rl);padding:13px 15px;margin-bottom:5px}
+.crm-entry-header{display:flex;align-items:flex-start;gap:11px;margin-bottom:10px}
+.crm-entry-dot{width:10px;height:10px;border-radius:50%;background:#a855f7;flex-shrink:0;margin-top:3px}
+.crm-entry-title{font-size:17px;font-weight:700;color:#a855f7;margin-bottom:3px}
+.crm-entry-sub{font-size:11px;color:var(--t3);line-height:1.6}
+.crm-entry-tags{display:flex;flex-wrap:wrap;gap:5px}
+.crm-entry-tag{font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#a855f7;font-weight:500}
+/* HOW TWO-BLOCK */
+.how-two{display:grid;grid-template-columns:1fr 1.6fr;gap:8px;margin-bottom:5px;align-items:start}
+@media(max-width:560px){.how-two{grid-template-columns:1fr}}
+.how-block{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rl);padding:11px 12px}
+.how-block-title{font-size:11px;font-weight:700;color:var(--t2);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.how-block-sub{font-size:10px;color:var(--t4);margin-bottom:9px;line-height:1.5}
+.how-call-items{display:flex;flex-direction:column;gap:4px}
+.how-call-item{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;background:var(--bg4);border:1px solid var(--border);border-radius:var(--r)}
+.hci-ic{font-size:17px;flex-shrink:0}
+.hci-nm{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:1px}
+.hci-sub{font-size:10px;color:var(--t3);line-height:1.4}
+/* CALL TRACKING */
+.ct-block{background:var(--bg4);border:1px solid rgba(0,212,170,.2);border-radius:var(--r);padding:8px 11px;margin-top:5px;display:flex;align-items:center;gap:10px}
+.ct-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.ct-nm{font-size:12px;font-weight:700;color:var(--green)}
+.ct-sub{font-size:10px;color:var(--t4);margin-top:1px}
+/* WALKIN DIRECT NOTE */
+.walkin-note{background:var(--bg4);border:1px solid var(--border);border-radius:var(--r);padding:7px 11px;margin-top:5px;font-size:10px;color:var(--t4);display:flex;align-items:center;gap:6px}
+/* CRM FUNNEL */
+.crm-funnel{overflow-x:auto;scrollbar-width:none;margin-bottom:5px}
+.crm-funnel::-webkit-scrollbar{display:none}
+.crm-stages{display:flex;align-items:center;gap:0;min-width:640px;padding:2px 0}
+.crm-stage{flex:1;text-align:center;position:relative}
+.crm-stage-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 6px;margin:0 3px}
+.crm-stage-n{font-size:10px;font-weight:700;color:var(--acx);margin-bottom:3px}
+.crm-stage-nm{font-size:11px;font-weight:700;color:var(--t1);line-height:1.3;margin-bottom:3px}
+.crm-stage-sub{font-size:9px;color:var(--t4);line-height:1.4}
+.crm-arrow{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding:0 2px}
+.crm-cr{font-size:9px;font-weight:700;color:var(--amber);margin-bottom:2px;white-space:nowrap}
+.crm-arr-ic{color:var(--t5);font-size:14px;line-height:1}
+/* POST-SERVICE LOOP */
+.ps-loop{background:var(--bg3);border:1px solid rgba(0,212,170,.2);border-radius:var(--rl);padding:12px 14px;margin-bottom:5px}
+.ps-title{font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.ps-steps{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.ps-step{background:var(--bg4);border:1px solid rgba(0,212,170,.15);border-radius:var(--r);padding:7px 10px;font-size:11px;color:var(--t2);font-weight:500;flex:1;min-width:120px;text-align:center;line-height:1.4}
+.ps-step-arr{color:var(--t5);font-size:14px;flex-shrink:0}
+.ps-loop-note{margin-top:8px;font-size:10px;color:var(--t4);text-align:center;font-style:italic}
+/* OUTCOME FLOW */
+.outcome-flow{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-bottom:5px}
+.of-step{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 12px;font-size:11px;font-weight:600;color:var(--t2);flex:1;min-width:130px;text-align:center;line-height:1.4}
+.of-step.highlight{border-color:rgba(255,0,0,.3);background:rgba(255,0,0,.06);color:var(--t1)}
+.of-arr{color:var(--t5);font-size:16px;flex-shrink:0}
+
+/* OVERVIEW */
+.src-row{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:5px}
+@media(min-width:540px){.src-row{grid-template-columns:repeat(4,1fr)}}
+.src-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:11px 12px}
+.src-hd{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.src-ic{font-size:16px;flex-shrink:0}
+.src-nm{font-size:12px;font-weight:700}
+.src-desc{font-size:10px;color:var(--t4);margin-bottom:7px;line-height:1.5}
+.src-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.src-tags{display:flex;flex-wrap:wrap;gap:3px}
+.src-tag{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:500}
+/* WHERE level */
+.where-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:5px}
+.where-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 11px;text-align:center}
+.where-ic{font-size:26px;display:block;margin-bottom:6px}
+.where-nm{font-size:13px;font-weight:700}
+.where-sub{font-size:10px;color:var(--t3);margin-top:3px;line-height:1.45}
+/* HOW level */
+.how-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:5px}
+@media(max-width:540px){.how-row{grid-template-columns:repeat(2,1fr)}}
+.how-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 10px;display:flex;align-items:flex-start;gap:9px}
+.how-ic{font-size:22px;flex-shrink:0;margin-top:1px}
+.how-nm{font-size:12px;font-weight:700;margin-bottom:2px}
+.how-sub{font-size:10px;color:var(--t3);line-height:1.45}
+.pipe-wrap{overflow-x:auto;scrollbar-width:none;margin-bottom:3px}
+.pipe-wrap::-webkit-scrollbar{display:none}
+.pipe-grid{display:grid;grid-template-columns:repeat(8,82px);gap:4px;min-width:688px}
+.pstg{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:8px 5px;text-align:center;cursor:pointer;transition:all .15s}
+.pstg:hover{border-color:rgba(255,0,0,.5);background:rgba(255,0,0,.07)}
+.pstg-n{font-size:10px;color:var(--acx);font-weight:700;margin-bottom:3px}
+.pstg-nm{font-size:11px;color:var(--t2);line-height:1.4}
+.track-grid{display:grid;grid-template-columns:repeat(8,82px);gap:4px;min-width:688px;margin-top:3px}
+.tnode{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:6px 4px;text-align:center}
+.tnode-acc{display:inline-block;width:5px;height:5px;border-radius:50%;margin-bottom:2px}
+.tnode-l{font-size:9px;color:var(--t3);line-height:1.4}
+.outcome-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}
+@media(max-width:560px){.outcome-row{grid-template-columns:1fr}}
+.obox{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;border-left-width:2px;border-left-style:solid}
+.obox-t{font-size:13px;font-weight:700;margin-bottom:5px}
+.obox-s{font-size:11px;color:var(--t3);line-height:1.65}
+
+/* JOURNEY */
+.stage-nav-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.stage-nav{display:flex;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.stage-nav::-webkit-scrollbar{display:none}
+.snav{flex:1;min-width:56px;padding:10px 2px 11px;text-align:center;cursor:pointer;border-bottom:2px solid transparent;color:var(--t4);font-size:10px;line-height:1.3;transition:all .15s;user-select:none;font-weight:500}
+.snav .sn-dot{display:block;width:20px;height:20px;border-radius:50%;background:var(--border);font-size:10px;font-weight:700;line-height:20px;text-align:center;margin:0 auto 4px;transition:all .15s}
+.snav.a{color:var(--acx);border-bottom-color:var(--acx)}
+.snav.a .sn-dot{background:var(--acx);color:#fff}
+.snav.d .sn-dot{background:var(--bg3);color:var(--t3)}
+.stage-content{padding:18px}
+.s-title{font-size:22px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.s-desc{font-size:13px;color:var(--t3);margin-bottom:11px;line-height:1.7}
+.emo-b{display:inline-flex;align-items:center;padding:4px 13px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:14px;letter-spacing:.04em}
+.two-col{display:grid;grid-template-columns:1fr 1.38fr;gap:11px}
+@media(max-width:620px){.two-col{grid-template-columns:1fr}}
+.scard{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:13px}
+.scl{font-size:10px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:9px}
+.ssl{font-size:11px;font-weight:700;color:var(--t3);margin:10px 0 5px;display:flex;align-items:center;gap:5px}
+.ssl-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sitems{list-style:none;display:flex;flex-direction:column;gap:4px}
+.sitems li{font-size:13px;color:var(--t2);padding-left:11px;position:relative;line-height:1.6}
+.sitems li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--t4)}
+.sitems.pain li::before{background:var(--danger)}
+.mact{background:var(--bg4);border:1px solid var(--border);border-left:2px solid var(--acx);border-radius:6px;padding:8px 11px;margin-bottom:6px}
+.mact-n{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.mact-d{font-size:11px;color:var(--t3);line-height:1.65}
+.track-b2{background:var(--bg4);border:1px solid var(--border);border-left:2px solid var(--green);border-radius:6px;padding:8px 11px;margin-top:9px}
+.tb-l{font-size:9px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3px}
+.tb-t{font-size:11px;color:var(--t2);line-height:1.65}
+.wow-b{background:var(--bg4);border:1px solid var(--border);border-left:2px solid var(--amber);border-radius:6px;padding:8px 11px;margin-top:6px}
+.wow-l{font-size:9px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3px}
+.wow-t{font-size:11px;color:var(--t2);line-height:1.65}
+.chs-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:9px;padding-top:9px;border-top:1px solid var(--border)}
+.ch-pill{font-size:10px;padding:2px 8px;background:var(--bg4);border:1px solid var(--border);border-radius:10px;color:var(--t3)}
+.snav-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:13px;border-top:1px solid var(--border)}
+.snb{padding:7px 18px;font-size:13px;cursor:pointer;background:transparent;border:1px solid var(--border);border-radius:var(--r);color:var(--t3);font-family:var(--font);font-weight:500;transition:all .15s}
+.snb:hover:not(:disabled){background:var(--bg3);color:var(--t1)}
+.snb:disabled{opacity:.2;cursor:default}
+.snb.pr{background:var(--acx);color:#fff;border-color:var(--acx)}
+.snb.pr:hover:not(:disabled){background:var(--acx-dim)}
+.s-cnt{font-size:12px;color:var(--t4);font-weight:500}
+
+/* TRACKING */
+.crm-box{background:var(--bg2);border:1px solid rgba(168,85,247,.25);border-left:3px solid var(--purple);border-radius:var(--rl);padding:16px 18px;margin-bottom:14px}
+.crm-t{font-size:16px;font-weight:700;color:var(--purple);margin-bottom:11px}
+.crm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+@media(max-width:500px){.crm-grid{grid-template-columns:1fr}}
+.crm-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;font-size:12px;color:var(--t2);display:flex;gap:9px;align-items:flex-start}
+.trk-table,.rep-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:18px}
+.trk-table th,.rep-table th{text-align:left;padding:8px 10px;color:var(--t4);font-weight:700;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.trk-table td,.rep-table td{padding:9px 10px;border-bottom:1px solid var(--border2);color:var(--t2)}
+.trk-table td:first-child{color:var(--t1);font-weight:600}
+.ab{padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700}
+
+/* BRAND AWARENESS */
+.ch-row-ba{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:5px}
+@media(min-width:540px){.ch-row-ba{grid-template-columns:repeat(4,1fr)}}
+.ch-box-ba{background:var(--bg3);border:1px solid var(--border);border-left:2px solid var(--amber);border-radius:var(--r);padding:10px 11px;cursor:pointer;transition:border-color .2s}
+.ch-box-ba.active{border-color:var(--amber);background:rgba(245,166,35,.05)}
+.ch-ic-ba{font-size:24px;display:block;margin-bottom:5px}
+.ch-nm-ba{font-size:12px;font-weight:700;color:var(--amber);margin-bottom:3px}
+.ch-ex-ba{font-size:10px;color:var(--t3);line-height:1.5}
+.ch-detail-ba{background:var(--bg3);border:1px solid rgba(245,166,35,.25);border-radius:var(--r);padding:14px 16px;margin-bottom:9px}
+.ch-d-title-ba{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:10px}
+.ch-d-grid-ba{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:500px){.ch-d-grid-ba{grid-template-columns:1fr}}
+.ch-d-item-ba{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:10px}
+.ch-d-label-ba{font-size:9px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:5px}
+.ch-d-val-ba{font-size:11px;color:var(--t2);line-height:1.65}
+.dual-paths-ba{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+@media(max-width:580px){.dual-paths-ba{grid-template-columns:1fr}}
+.dual-path-ba{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:14px}
+.dp-badge-ba{font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:9px;letter-spacing:.06em}
+.dp-title-ba{font-size:16px;font-weight:700;margin-bottom:6px}
+.dp-desc-ba{font-size:11px;color:var(--t2);line-height:1.7;margin-bottom:10px}
+.dp-segs-ba{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.seg-pill-ba{font-size:10px;padding:3px 9px;border-radius:8px;font-weight:600}
+.dp-effect-ba{background:var(--bg3);border-radius:6px;padding:9px 11px;font-size:11px;color:var(--t2);line-height:1.7;border-left:2px solid}
+.drp-mock-ba{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:16px 18px;margin-top:12px}
+.drp-header-ba{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:11px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.insurer-badge-ba{display:inline-block;background:rgba(66,133,244,.1);border:1px solid rgba(66,133,244,.25);border-radius:6px;padding:2px 9px;font-size:10px;color:var(--blue);font-weight:600}
+.shop-list-ba{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.shop-row-ba{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3)}
+.shop-row-ba.known{border-color:rgba(192,0,0,.35);background:rgba(192,0,0,.05)}
+.shop-dot-ba{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.shop-nm-ba{font-size:14px;font-weight:600;flex:1}
+.shop-tag-ba{font-size:10px;padding:2px 9px;border-radius:8px;font-weight:600}
+.shop-pick-ba{font-size:11px;padding:4px 12px;border-radius:6px;font-weight:700}
+.drp-insight-ba{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+@media(max-width:500px){.drp-insight-ba{grid-template-columns:1fr}}
+.di-box-ba{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:11px}
+.di-l-ba{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.di-t-ba{font-size:11px;color:var(--t2);line-height:1.7}
+.lift-steps-ba{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.lift-step-ba{display:flex;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px;align-items:flex-start}
+.lift-n-ba{width:24px;height:24px;border-radius:50%;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);font-size:13px;font-weight:700;color:var(--amber);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.lift-t-ba{font-size:13px;font-weight:700;color:#ccc;margin-bottom:3px}
+.lift-s-ba{font-size:11px;color:var(--t2);line-height:1.7}
+.metrics-row-ba{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}
+@media(max-width:540px){.metrics-row-ba{grid-template-columns:repeat(2,1fr)}}
+.metric-box-ba{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:11px;text-align:center}
+.metric-ic-ba{font-size:24px;display:block;margin-bottom:6px}
+.metric-nm-ba{font-size:12px;font-weight:700;color:#aaa;margin-bottom:3px}
+.metric-sub-ba{font-size:10px;color:var(--t3);line-height:1.55}
+.principle-box-ba{margin-top:14px;padding:14px 17px;background:var(--bg2);border:1px solid rgba(245,166,35,.2);border-left:2px solid var(--amber);border-radius:var(--r);font-size:12px;color:var(--t2);line-height:2;font-weight:500}
+
+/* DRP FUNNEL */
+.drp-path-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+@media(max-width:580px){.drp-path-split{grid-template-columns:1fr}}
+.drp-path{border-radius:var(--rl);padding:14px;border:1px solid var(--border)}
+.drp-path.path-direct{border-top:3px solid var(--t4);background:var(--bg3)}
+.drp-path.path-list{border-top:3px solid var(--acx);background:var(--bg3)}
+.drp-path-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+.drp-path-title{font-size:16px;font-weight:700;margin-bottom:5px}
+.drp-path-desc{font-size:11px;color:var(--t3);line-height:1.65;margin-bottom:10px}
+.drp-path-steps{display:flex;flex-direction:column;gap:5px}
+.drp-ps{display:flex;align-items:flex-start;gap:8px;background:var(--bg4);border:1px solid var(--border);border-radius:var(--r);padding:7px 9px}
+.drp-ps-n{width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.drp-ps-t{font-size:11px;font-weight:600;color:var(--t1);margin-bottom:1px}
+.drp-ps-s{font-size:10px;color:var(--t3);line-height:1.45}
+.drp-key-moment{background:var(--bg2);border:1px solid rgba(255,0,0,.25);border-left:3px solid var(--acx);border-radius:var(--rl);padding:14px 16px;margin:10px 0}
+.dkm-title{font-size:14px;font-weight:700;color:var(--acx);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.dkm-stat{display:inline-flex;align-items:baseline;gap:5px;background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.2);border-radius:var(--r);padding:6px 12px;margin-bottom:10px}
+.dkm-stat-n{font-size:34px;font-weight:800;color:var(--acx);line-height:1}
+.dkm-stat-l{font-size:11px;color:var(--t2);line-height:1.4;max-width:220px}
+.dkm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:520px){.dkm-grid{grid-template-columns:1fr}}
+.dkm-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px}
+.dkm-box-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.dkm-box-body{font-size:11px;color:var(--t3);line-height:1.6}
+.drp-sales-funnel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin:10px 0}
+.dsf-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.dsf-sub{font-size:11px;color:var(--t4);margin-bottom:14px}
+.dsf-stages{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch}
+.dsf-stage{flex:1;min-width:120px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 10px 8px;position:relative}
+.dsf-stage.risk{border-color:rgba(233,69,96,.3);background:rgba(233,69,96,.04)}
+.dsf-stage.ok{border-color:rgba(0,212,170,.2)}
+.dsf-icon{font-size:22px;display:block;margin-bottom:5px}
+.dsf-nm{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.dsf-body{font-size:10px;color:var(--t3);line-height:1.5;margin-bottom:5px}
+.dsf-risk-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;display:inline-block}
+.drp-takeaway{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rl);padding:14px 16px;margin-top:10px}
+.drp-ta-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:10px}
+.drp-ta-items{display:flex;flex-direction:column;gap:6px}
+.drp-ta-item{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;background:var(--bg4);border:1px solid var(--border);border-radius:var(--r)}
+.drp-ta-num{font-size:11px;font-weight:700;color:var(--acx);flex-shrink:0;width:18px}
+.drp-ta-t{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.drp-ta-s{font-size:11px;color:var(--t3);line-height:1.55}
+
+/* REPAIR EXPERIENCE */
+.repair-exp-block{background:var(--bg2);border:1px solid rgba(255,0,0,.2);border-top:2px solid var(--acx);border-radius:var(--rl);padding:14px 16px;margin-bottom:5px}
+.rep-exp-title{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.rep-exp-sub{font-size:11px;color:var(--t3);line-height:1.6;margin-bottom:12px}
+.rep-exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+@media(max-width:560px){.rep-exp-grid{grid-template-columns:repeat(2,1fr)}}
+.rep-exp-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 11px}
+.rep-exp-ic{font-size:22px;display:block;margin-bottom:5px}
+.rep-exp-nm{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.rep-exp-s{font-size:10px;color:var(--t3);line-height:1.55}
+
+/* FOOTER */
+.footer{max-width:880px;margin:0 auto;padding:24px 28px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border2);flex-wrap:wrap;gap:8px}
+.footer-l{font-size:13px;color:var(--t5);font-weight:500}
+.footer-r{font-size:12px;color:var(--t5)}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-logo">ACX</div>
+  <a class="nav-link active" href="#overview">System overview</a>
+  <a class="nav-link" href="#journey">Stage navigator</a>
+  <a class="nav-link" href="#tracking">Tracking layer</a>
+  <a class="nav-link" href="#brand">Brand awareness</a>
+  <a class="nav-link" href="#drp">DRP funnel</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Segment 1 — Insurance-directed customer</div>
+  <h1>ACX <span>Marketing</span> System</h1>
+  <p>Acquisition funnel, customer journey, lead tracking, and brand awareness integration — mapped as one closed-loop strategy for the Canadian collision repair market.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">30+ locations across Canada</span>
+    <span class="hero-pill">MPI &middot; SGI &middot; ICBC &middot; Private insurers</span>
+    <span class="hero-pill">Omnichannel strategy</span>
+    <span class="hero-pill">Insurance-directed segment</span>
+  </div>
+</div>
+
+<div class="section" id="overview">
+  <div class="section-hd">
+    <div class="section-num">01 &mdash; The system</div>
+    <div class="section-title">ACX growth engine</div>
+    <div class="section-sub">Acquisition sources feed the customer journey. The journey generates trackable events. Tracking data optimizes which sources get budget. Every stage connects forward and back.</div>
+  </div>
+  <div id="overviewContent"></div>
+</div>
+<div class="sdiv"></div>
+
+<div class="section" id="journey">
+  <div class="section-hd">
+    <div class="section-num">02 &mdash; Customer journey</div>
+    <div class="section-title">Stage navigator &mdash; insurance-directed segment</div>
+    <div class="section-sub">Eight stages from collision to post-service advocacy. Each stage maps customer actions, pain points, ACX marketing activities, and the tracking touchpoint that captures data from that moment.</div>
+  </div>
+  <div class="stage-nav-wrap">
+    <div class="stage-nav" id="stageNav"></div>
+    <div class="stage-content" id="stageContent"></div>
+  </div>
+</div>
+<div class="sdiv"></div>
+
+<div class="section" id="tracking">
+  <div class="section-hd">
+    <div class="section-num">03 &mdash; Measurement</div>
+    <div class="section-title">Tracking layer &mdash; every source, every dollar</div>
+    <div class="section-sub">Every source gets a unique identifier. Every lead lands in the CRM with source attribution. Closed deals feed back to Google Ads and Meta as offline conversions. The result is a system where every channel is measured and every algorithm optimizes toward actual revenue.</div>
+  </div>
+  <div id="trackingContent"></div>
+</div>
+<div class="sdiv"></div>
+
+<div class="section" id="brand">
+  <div class="section-hd">
+    <div class="section-num">04 &mdash; Brand awareness</div>
+    <div class="section-title">Brand awareness channels &mdash; measurement and lift methodology</div>
+    <div class="section-sub">Brand awareness cannot be measured like performance ads. This section covers which channels ACX uses, how to track each one, and the lift methodology that proves brand spend is working across all markets.</div>
+  </div>
+  <div id="brandContent"></div>
+</div>
+
+<div class="sdiv"></div>
+
+<div class="section" id="drp">
+  <div class="section-hd">
+    <div class="section-num">05 &mdash; DRP funnel</div>
+    <div class="section-title">The DRP customer journey — why marketing still decides the outcome</div>
+    <div class="section-sub">Having a DRP agreement is the starting point, not the finish line. Brand awareness, online reputation, and sales process determine whether an ACX location wins or loses the customer at every decision point in the insurance funnel.</div>
+  </div>
+  <div id="drpContent"></div>
+</div>
+
+<div class="footer">
+  <div class="footer-l">ACX Auto Collision &mdash; Marketing System</div>
+  <div class="footer-r">Segment 1: Insurance-directed &middot; Canada &middot; 2026</div>
+</div>
+
+<script>
+var activeStage=0;
+
+var sourceGroups=[
+  {name:'DRP / Insurer referral',color:'#FF0000',icon:'🏥',desc:'Insurance sends the customer directly to ACX as a preferred shop',tags:['MPI preferred','SGI preferred','ICBC DRP','Private insurer']},
+  {name:'Paid digital',color:'#4285F4',icon:'💰',desc:'Ads we pay for across search, social, audio, and out-of-home',tags:['Google Search Ads','Meta Ads','Display / YouTube','Retargeting']},
+  {name:'Organic & owned',color:'#34A853',icon:'🌱',desc:'Traffic we earn through content, reviews, and reputation',tags:['SEO / hub pages','Google Business Profile','Word of mouth','Social media']},
+  {name:'B2B / Partnership referral',color:'#f5a623',icon:'🤝',desc:'Businesses that send customers our way through an active relationship',tags:['Dealerships','Towing companies','Car rental (Enterprise, Hertz)','OEM partner sites','Insurance brokers','Fleet managers']},
+];
+var whereNodes=[
+  {ic:'🌐',name:'acx.auto website',sub:'Customer lands on our site from any source',color:'#4285F4'},
+  {ic:'📍',name:'Google Business Profile / Maps',sub:'Customer finds ACX directly in Google or Maps',color:'#34A853'},
+  {ic:'🚶',name:'Walk-in at shop',sub:'Customer arrives in person at an ACX location',color:'#9D0000'},
+];
+var stageTrack=[
+  'DRP referral logged in insurer system. No direct shop tracking yet — relationship layer only.',
+  'Branded search volume in Google Search Console. Google Business Profile impressions in Google Business Profile Insights. Customer has not yet visited the website at this stage.',
+  'Session behavior in GA4: pages viewed, time on site, scroll depth. Callback widget interactions captured as leads. Customer has not yet called — still researching.',
+  'Unique tracking number captures source automatically. Call recording attached. CRM lead created with source attribution.',
+  'Intake record created in CRM. Source confirmed at intake. Deal stage set to Active Repair. Repair progress tracked in BodyShopConnect.',
+  'SMS delivery and open rates tracked. No revenue event at this stage.',
+  'Deal marked Won in CRM. Job value and deductible entered. Deal stage: Closed/Won.',
+  'Google review velocity tracked in Google Business Profile. CSI score from insurer. Closed deal pushed to Google Ads AND Meta as offline conversions — both algorithms retrain on revenue data.',
+];
+var emoMap={
+  danger:'background:rgba(233,69,96,.15);color:#e94560',
+  warning:'background:rgba(245,166,35,.15);color:#f5a623',
+  info:'background:rgba(66,133,244,.15);color:#6aadff',
+  success:'background:rgba(0,212,170,.15);color:#00d4aa',
+};
+var stages=[
+  {num:1,name:'Trigger',full:'Trigger and inciting event',desc:'A collision occurs. The customer opens a claim and enters the shop selection process.',emotion:'Shocked and stressed',emo:'danger',
+  actions:['Collides or discovers vehicle damage','Calls insurer or broker to open a claim','Receives first instructions from adjuster','Is directed toward DRP shop options'],
+  pains:['No understanding of what comes next — the repair process is completely unknown to most drivers','Overwhelmed and stressed immediately after a traumatic event','Adjuster pressure to choose quickly before the customer has time to research options'],
+  activities:[{n:'Pre-funnel: DRP agreements (ongoing)',d:'Active preferred-repairer agreements with MPI, SGI, ICBC, and private insurers must be in place before a claim occurs. ACX name, address, and phone must be exact across every insurer directory. This is infrastructure, not a reaction to a claim.'},{n:'Pre-funnel: Insurer relationship program',d:'Regular touchpoints with claims managers — quarterly calls, annual capacity briefings. The goal is to be the easiest and most reliable DRP call the adjuster makes when a claim comes in.'},{n:'At trigger: Proactive customer outreach',d:'When ACX receives a DRP notification, call the customer within 2 hours: "Your insurer connected us. We are here whenever you are ready." This must happen before any competitor does it.'}],
+  wow:'When ACX receives the DRP referral notification, a staff member calls the customer within 2 hours before they have started researching alternatives. Most shops wait for the customer to call them. ACX calls first.',channels:['Insurer DRP portal','Insurer directory listing','Claims manager relationship','Dedicated intake phone line']},
+  {num:2,name:'Awareness',full:'Awareness',desc:'The insurer names ACX. The customer verifies the recommendation online before committing.',emotion:'Passive, mildly skeptical',emo:'warning',
+  actions:['Receives ACX name from insurer during claim call','Googles the shop name to verify','Reads recent Google reviews briefly','Checks GBP for hours, location, and photos'],
+  pains:['Uncertainty about whether the insurer recommendation is genuine or just a cost-cutting arrangement','Google Business Profile with few reviews or a low rating immediately undermines the insurer referral','Website not optimized for mobile — most customers check on their phone right after the claim call and a poor mobile experience kills credibility instantly'],
+  activities:[{n:'GBP optimization (ongoing)',d:'Maintain 200+ reviews at 4.7+ rating. Complete all profile fields: services, attributes, booking link, Q&A, updated photos. A strong GBP confirms the insurer referral before the customer calls.'},{n:'"Insurance customer" landing page',d:'A dedicated page on acx.auto explaining what to expect when the insurer sends you to us. Removes pre-visit anxiety that no competitor addresses.'},{n:'Review acquisition program',d:'Systematic post-repair SMS review requests targeting 20+ new reviews per month per location. Volume and recency are the two most influential GBP ranking factors.'}],
+  wow:'A GBP profile with 300+ reviews at 4.8+ featuring insurance-specific testimonials. The insurer recommends; the reviews confirm.',channels:['Google Business Profile','Google Search','ACX website (mobile)','DRP directory']},
+  {num:3,name:'Consideration',full:'Consideration',desc:'A brief evaluation phase before the customer commits to contacting ACX.',emotion:'Cautiously evaluating',emo:'warning',
+  actions:['Reads 5 to 10 recent reviews looking for insurance mentions','Checks photo gallery and website','May call one alternative shop to compare','Asks a trusted contact about ACX'],
+  pains:['Website has no information about the insurance repair process — the customer does not know what to expect or whether ACX handles insurers directly','No visible turnaround time, process walkthrough, or proof of past insurance work on the site','No recent photos in the Google Business Profile — customer cannot visualize repair quality or shop professionalism'],
+  activities:[{n:'Callback widget on acx.auto',d:'LimeCall or CallPage deployed on site. Insurance customers who will not leave voicemail get a confirmed callback in minutes. Converts hesitant visitors before they call a competitor.'},{n:'Insurance testimonial strategy',d:'When requesting reviews, prompt with context: "Did your insurer send you to us?" Insurance-specific reviews are the most persuasive content for this segment.'},{n:'Insurance repair FAQ page',d:'Addresses the three questions every insurance customer has before calling: "Do I have to use this shop?", "Will you deal with my insurer directly?", "How long will my repair take?"'}],
+  wow:'A short video on the website with an advisor explaining the process from drop-off to pickup specifically for insurance customers.',channels:['Google reviews','ACX website','Google Business Profile photos','Callback widget','Word of mouth']},
+  {num:4,name:'First contact',full:'First contact',desc:'Customer calls or submits an intake form. The first impression of ACX is formed entirely in this interaction.',emotion:'Anxious, testing responsiveness',emo:'danger',
+  actions:['Calls the shop or submits online intake form','Provides claim number, insurer name, damage description','Asks about timeline and what to bring','Books a drop-off appointment'],
+  pains:['Missed call with no callback within 5 minutes — customer immediately calls the next shop on the insurer list. This is the single highest drop-off risk in the entire funnel.','Front desk staff cannot confidently answer basic insurance process questions — customer loses trust on the first call','No booking confirmation sent — customer is left uncertain whether the appointment is real and may not show up'],
+  activities:[{n:'Insurance intake call training',d:'Standardized script: confirm claim number, explain direct insurer communication, set turnaround expectation. Staff must confidently say "we handle everything with your insurer directly."'},{n:'SMS booking confirmation',d:'Automated SMS within 2 minutes of booking: advisor name, appointment time, shop address, and a what-to-bring checklist. Eliminates post-call anxiety immediately.'},{n:'Online intake form with claim fields',d:'Form includes insurer name, claim number, and damage description. Pre-populates the intake record so staff are fully briefed before the customer arrives.'},{n:'After-hours intake option',d:'After-hours calls route to a callback request form, not voicemail. Returned within 30 minutes of shop opening the next day.'}],
+  wow:'The advisor proactively says: "I will call your insurer myself and get the authorization started before you even drop off." This removes the single largest source of stress for this segment.',channels:['Phone (primary)','SMS booking confirmation','Online intake form','Email','ACX website']},
+  {num:5,name:'Drop-off',full:'Drop-off and intake',desc:'Customer arrives and hands over the vehicle. First physical impression of ACX is formed here.',emotion:'Anxious about unknowns',emo:'danger',
+  actions:['Arrives with claim documents, keys, and insurance card','Walkaround with service advisor','Signs authorization forms','Arranges rental car or shuttle'],
+  pains:['Long wait at intake counter if the shop is busy — first physical impression is poor','Customer signs authorization forms without a clear explanation of what they have agreed to — creates disputes at pickup','Rental not coordinated — customer must make their own calls while already stressed'],
+  activities:[{n:'Digital tablet intake and e-signature',d:'Paperless intake via tablet. Customer receives PDF copy by email immediately. Faster, more professional, and eliminates post-repair disputes about authorized scope of work.'},{n:'Walkaround video via SMS',d:'90-second video of the vehicle documenting all pre-existing marks sent to the customer before they leave. Protects both parties and signals a level of professionalism most shops never demonstrate.'},{n:'Authorization form walkthrough',d:'Advisor explains the authorization form in plain language before signing: what is covered, what happens if additional damage is found, and what the customer will owe. No surprises at pickup.'},{n:'On-site rental and OEM conversation',d:'Rental arranged on-site with no calls required. For newer or premium vehicles, advisor confirms OEM parts policy and insurer coverage proactively — this builds trust and prevents disputes.'}],
+  wow:'Customer drives away having signed nothing on paper, holding a vehicle video on their phone, with rental car already waiting outside.',channels:['In-person','SMS (walkaround video)','Email (intake copy)','Tablet (e-signature)']},
+  {num:6,name:'During repair',full:'During repair',desc:'Vehicle is being repaired. Customer has no visibility and anxiety accumulates with every hour of silence.',emotion:'Anxious, in the dark',emo:'danger',
+  actions:['Waits with no visibility into what is happening','Calls the shop if 48+ hours pass without communication','Manages rental while tracking expected completion date'],
+  pains:['No proactive updates — customer calls the shop more than the shop calls the customer, which signals poor communication and directly produces negative reviews','Supplement discovery delays are not explained: insurer approval takes time and the customer is left wondering what is happening','Supplement delay extends the repair timeline — rental coverage runs out, customer pays out of pocket, and blames ACX. This chain is entirely preventable with one proactive call.'],
+  activities:[{n:'Five-milestone SMS system',d:'Automated SMS at each stage: parts ordered, parts arrived, vehicle in paint, quality check underway, ready for pickup. Each message is one sentence. Cost zero; impact on review scores substantial.'},{n:'Supplement advocacy protocol',d:'When additional damage is found, submit to insurer same day and call the customer: "We found additional damage. We have already sent it to your insurer." Customer is never blindsided.'},{n:'Proactive delay communication',d:'If completion date shifts, the shop calls before the customer calls, with the new date and a reason. Never allow a customer to discover a delay by arriving for pickup.'}],
+  wow:'"Your vehicle just entered the paint booth — we are on track for Thursday pickup." Most customers have never received this message from any shop.',channels:['SMS (milestone updates)','Phone (supplement, delay)','Email','Insurer portal']},
+  {num:7,name:'Pickup',full:'Pickup and payment',desc:'Customer collects the vehicle, pays the deductible, and forms a final lasting impression of ACX.',emotion:'Relieved but evaluating quality',emo:'info',
+  actions:['Receives completion call or SMS','Returns rental and arranges ride to shop','Walkaround with service advisor','Pays deductible and signs off'],
+  pains:['Rushed walkaround with no explanation of what was repaired — customer does not know what to look for and misses issues they will notice later','Deductible amount is a surprise if it was not confirmed clearly in the pre-pickup SMS','Customer notices a minor imperfection during walkaround but feels awkward raising it — leaves without saying anything and writes a 4-star review instead of 5'],
+  activities:[{n:'Pre-pickup deductible confirmation',d:'SMS the day before pickup: "Your vehicle is ready for [day] at [time]. Your deductible is $[X], payable by Visa, Mastercard, or debit." Eliminates the single most common friction point at pickup.'},{n:'Technician-led walkaround',d:'The technician who did the work walks the customer through every repaired area and explicitly invites feedback: "If anything does not look right, please tell us now and we will fix it." This prevents silent dissatisfaction.'},{n:'Before/after photo set via SMS',d:'Side-by-side before/after photo pair texted at pickup. Creates a shareable emotional moment and proof of quality. Many customers post these unprompted.'},{n:'Plain-language repair summary by email',d:'Emailed at pickup: what was repaired, what was replaced, parts used, warranty terms, and who to call. Not the invoice — a human-readable document. Most shops produce nothing like this.'},{n:'Physical warranty card at pickup',d:'Warranty card handed over in person at pickup, not just mentioned verbally. A tangible document the customer keeps in the glove box. Signals confidence in the work.'}],
+  wow:'Customer drives away with before/after photos, a clean car, a repair summary in their inbox, and a warranty card in the glove box.',channels:['In-person','SMS (before/after, reminder)','Email (summary, receipt)','Phone (completion call)']},
+  {num:8,name:'Post-service',full:'Post-service',desc:'Customer reflects on the experience and decides whether to recommend ACX.',emotion:'Relief — high advocacy potential',emo:'success',
+  actions:['Reflects on the overall experience in the days after pickup','Completes the insurer CSI survey if received','Mentions ACX to a friend, family member, or colleague who later needs a body shop','Returns to ACX for a future repair without searching online','Leaves a Google review if specifically invited to do so'],
+  pains:['No follow-up from ACX after pickup — only the insurer CSI system reaches out, which misses the emotional peak of the experience','Satisfied customers never leave a review because no one asked — only dissatisfied customers write unprompted','Customer has a minor post-repair concern but is unsure whether it is worth calling about — does nothing and leaves a 4-star review instead of 5'],
+  activities:[{n:'5-day personal check-in SMS',d:'"Hi [Name], this is [Advisor] at ACX. How is the car looking? Anything we can help with?" Sent on day 5 post-pickup. Personal in tone, not automated-feeling. This single message generates more 5-star reviews than any paid campaign and catches post-repair concerns before they become public.'},{n:'Google review request',d:'One-tap Google review link sent via SMS on day 3 to 5, after the check-in. "If you are happy with the work, a quick review means a lot to our team." One message only, no follow-up pressure. Timing matters — send at the emotional peak.'},{n:'CSI score monitoring and recovery',d:'Track insurer CSI scores by location weekly. Any score below 8/10 triggers a direct call from the service manager within 24 hours — resolve the concern before it becomes a public Google review.'},{n:'Closed deal fed to Google Ads and Meta',d:'Won deals uploaded to both Google Ads and Meta as offline conversions. Both algorithms learn which clicks and impressions turn into actual revenue. This is what makes paid campaigns progressively more efficient over time.'}],
+  wow:'"We just wanted to make sure everything looks perfect. If anything does not, we will fix it. That is a promise." No other shop makes this call.',channels:['SMS (check-in + review request)','Phone (CSI recovery call)','Email (retention touchpoint)','Google review link','Google Ads offline conversion','Meta offline conversion']},
+];
+var trackingSetup=[
+  {src:'DRP / Insurer referral',method:'CRM source field set manually at intake by staff',acc:'Manual',ac:'#888'},
+  {src:'B2B / Partnership referral',method:'CRM source field set manually at intake by staff',acc:'Manual',ac:'#888'},
+  {src:'Call — website number',method:'Dynamic number via CallRail / CallTrackingMetrics — source auto-identified',acc:'Exact',ac:'#00d4aa'},
+  {src:'Call — Google Ads extension',method:'Google forwarding number — source auto-attributed in Google Ads',acc:'Exact',ac:'#00d4aa'},
+  {src:'Call — Google Business Profile / Maps number',method:'Static unique number assigned exclusively to the Google Business Profile',acc:'Exact',ac:'#00d4aa'},
+  {src:'Call — partner site number',method:'Dedicated static number per partner (dealer / OEM / insurer)',acc:'Exact',ac:'#00d4aa'},
+  {src:'Form fill — acx.auto',method:'Form submission logged in CRM with page URL and UTM source',acc:'Exact',ac:'#00d4aa'},
+  {src:'Form fill — partner site',method:'Lead forwarded by partner; source tagged in CRM at creation',acc:'Exact',ac:'#00d4aa'},
+  {src:'Walk-in',method:'Staff asks "how did you hear about us?" at intake + Google Store Visits',acc:'Approx.',ac:'#f5a623'},
+  {src:'Word of mouth',method:'Staff asks at intake and logs source in CRM manually',acc:'Manual',ac:'#888'},
+];
+
+function renderOverview(){
+  var baChannels=['Terrestrial radio (Pattison, Rogers, Rawlco)','Spotify / Streaming audio','Digital audio / iHeart DAI','Meta brand awareness','DOOH / Digital billboards','Transit advertising','Podcast sponsorships','YouTube / Pre-roll video','Connected TV (CTV)','Community sponsorships & events','PR / Earned media'];
+  var crmStages=[
+    {n:'01',nm:'New lead',sub:'Source identified & logged'},
+    {n:'02',nm:'Qualified lead',sub:'Manager confirms: real lead?'},
+    {n:'03',nm:'Appointment scheduled',sub:'Estimate visit booked'},
+    {n:'04',nm:'Estimate provided',sub:'Repair quote sent to customer'},
+    {n:'05',nm:'Repair in progress',sub:'In BodyShopConnect'},
+    {n:'06',nm:'Closed / Won',sub:'Deal value entered'},
+  ];
+  var callItems=[
+    {ic:'🌐',nm:'Website number',sub:'Dynamic number on acx.auto — source auto-identified by call tracking'},
+    {ic:'📲',nm:'Ad Extension (Google Ads)',sub:'Google forwarding number — attributed directly in Google Ads'},
+    {ic:'📍',nm:'Google Business Profile / Maps',sub:'Static unique number on the Google Business Profile'},
+    {ic:'🤝',nm:'Partner / 3rd party website',sub:'Dedicated number on dealer, OEM, insurer, or rental partner sites'},
+  ];
+  var psSteps=[
+    'Reviews & NPS score collected',
+    'Google Business Profile rating grows',
+    'Higher selection rate on insurer preferred lists',
+    'More organic leads',
+    'More referrals & word of mouth',
+  ];
+  var ofSteps=[
+    {t:'Closed / Won',h:true},
+    {t:'Data sent to Google Ads & Meta',h:false},
+    {t:'Algorithms learn which clicks become revenue',h:false},
+    {t:'Report auto-updates',h:false},
+    {t:'Budget shifts to what works',h:false},
+  ];
+
+  document.getElementById('overviewContent').innerHTML=
+
+    // BRAND AWARENESS
+    '<div class="layer-lbl">Brand awareness &mdash; builds recognition before intent exists</div>'+
+    '<div class="ba-layer">'+
+      '<div class="ba-header">'+
+        '<div class="ba-title">Brand Awareness Layer</div>'+
+        '<div class="ba-note">Measured via brand lift &mdash; not direct attribution</div>'+
+      '</div>'+
+      '<div class="ba-tags">'+baChannels.map(function(c){return '<span class="ba-tag">'+c+'</span>'}).join('')+'</div>'+
+    '</div>'+
+    '<div class="farrow"><div class="farrow-lbl">raises awareness &mdash; customers start searching for ACX</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // GBP HEALTH
+    '<div class="layer-lbl">Online reputation &mdash; prerequisite for all other channels</div>'+
+    '<div class="gbp-block">'+
+      '<div class="gbp-left">'+
+        '<div class="gbp-title">GBP Health / Online Reputation</div>'+
+        '<div class="gbp-sub">Must be strong before scaling paid or brand awareness spend. When customers check ACX online, this is what they see first.</div>'+
+      '</div>'+
+      '<div class="gbp-items">'+
+        '<span class="gbp-item">Google Business Profile completeness</span>'+
+        '<span class="gbp-item">Review rating &amp; volume</span>'+
+      '</div>'+
+      '<div class="gbp-prereq">Fix before scaling spend &#x26A0;</div>'+
+    '</div>'+
+    '<div class="farrow"><div class="farrow-lbl">customer becomes aware and starts looking for ACX</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // ACQUISITION SOURCES
+    '<div class="layer-lbl">Acquisition sources &mdash; where customers come from</div>'+
+    '<div class="src-row">'+sourceGroups.map(function(g){
+      return '<div class="src-box" style="border-top:2px solid '+g.color+'">'+
+        '<div class="src-hd"><span class="src-ic">'+g.icon+'</span><span class="src-nm" style="color:'+g.color+'">'+g.name+'</span></div>'+
+        '<div class="src-desc">'+g.desc+'</div>'+
+        '<div class="src-tags">'+g.tags.map(function(t){return '<span class="src-tag" style="background:'+g.color+'18;color:'+g.color+'">'+t+'</span>'}).join('')+'</div>'+
+      '</div>'
+    }).join('')+'</div>'+
+    '<div class="farrow"><div class="farrow-lbl">customer is ready to reach out</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // WHERE
+    '<div class="layer-lbl">Where they interact with us</div>'+
+    '<div class="where-row">'+
+      '<div class="where-box" style="border-top:2px solid #4285F4"><span class="where-ic">🌐</span><div class="where-nm" style="color:#4285F4">ACX Website</div><div class="where-sub">Customer lands on acx.auto from any source</div></div>'+
+      '<div class="where-box" style="border-top:2px solid #34A853"><span class="where-ic">📍</span><div class="where-nm" style="color:#34A853">Google Business Profile / Maps</div><div class="where-sub">Customer finds ACX directly in Google Search or Maps</div></div>'+
+      '<div class="where-box" style="border-top:2px solid #9D0000"><span class="where-ic">🚶</span><div class="where-nm" style="color:#9D0000">Walk-in at shop</div><div class="where-sub">Arrives in person &mdash; goes directly to CRM</div>'+
+        '<div class="walkin-note">&#8594; Bypasses digital tracking &mdash; source captured by staff at intake</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="farrow"><div class="farrow-lbl">how they make contact</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // HOW — two blocks
+    '<div class="layer-lbl">How they contact us &mdash; every path is tracked</div>'+
+    '<div class="how-two">'+
+      // Form
+      '<div class="how-block" style="border-top:2px solid #4285F4">'+
+        '<div class="how-block-title">📋 Form submission</div>'+
+        '<div class="how-block-sub">Customer fills out an online form on acx.auto or a partner site. UTM parameters and source data are sent to CRM automatically with the submission.</div>'+
+      '</div>'+
+      // Call — 2-stage structure
+      '<div class="how-block" style="border-top:2px solid #FF0000">'+
+        '<div class="how-block-title">📞 Phone call &mdash; by source</div>'+
+        '<div class="how-block-sub">Customer calls one of several unique numbers. Each number is assigned to a specific source.</div>'+
+        '<div class="ct-stage-label">Step 1 &mdash; customer calls a number</div>'+
+        '<div class="how-call-items" style="margin-bottom:8px">'+callItems.map(function(c){
+          return '<div class="how-call-item"><span class="hci-ic">'+c.ic+'</span><div><div class="hci-nm">'+c.nm+'</div><div class="hci-sub">'+c.sub+'</div></div></div>'
+        }).join('')+'</div>'+
+        '<div class="ct-stage-label">Step 2 &mdash; call tracking identifies the source</div>'+
+        '<div class="ct-block">'+
+          '<div class="ct-dot"></div>'+
+          '<div><div class="ct-nm">Call Tracking (e.g. CallRail)</div><div class="ct-sub">Intercepts the call, logs source, duration, and recording automatically before routing to the shop</div></div>'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+
+    // CONVERGE ARROWS
+    '<div class="converge-wrap">'+
+      '<div class="converge-arm converge-left">&#8600;</div>'+
+      '<div class="converge-mid"><div class="converge-lbl">all contacts arrive in CRM with source tagged</div></div>'+
+      '<div class="converge-arm converge-right">&#8601;</div>'+
+    '</div>'+
+
+    // CRM BLOCK
+    '<div class="crm-entry-block">'+
+      '<div class="crm-entry-header">'+
+        '<div class="crm-entry-dot"></div>'+
+        '<div>'+
+          '<div class="crm-entry-title">CRM</div>'+
+          '<div class="crm-entry-sub">Every lead arrives here with source identified, call recording attached (if call), and contact details captured. One place for all channels.</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="crm-entry-tags">'+
+        '<span class="crm-entry-tag">Source identified</span>'+
+        '<span class="crm-entry-tag">Call recording attached</span>'+
+        '<span class="crm-entry-tag">Lead qualified by manager</span>'+
+        '<span class="crm-entry-tag">Deal value tracked</span>'+
+      '</div>'+
+    '</div>'+
+    '<div class="farrow"><div class="farrow-lbl">lead enters the sales pipeline</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // CRM FUNNEL
+    '<div class="layer-lbl">CRM pipeline &mdash; from new lead to closed deal</div>'+
+    '<div class="crm-funnel"><div class="crm-stages">'+
+      crmStages.map(function(s,i){
+        var arrow=i<crmStages.length-1?
+          '<div class="crm-arrow"><div class="crm-cr">CR%</div><div class="crm-arr-ic">&#8594;</div></div>':'';
+        return '<div class="crm-stage"><div class="crm-stage-box"><div class="crm-stage-n">'+s.n+'</div><div class="crm-stage-nm">'+s.nm+'</div><div class="crm-stage-sub">'+s.sub+'</div></div></div>'+arrow
+      }).join('')+
+    '</div></div>'+
+    '<div class="farrow"><div class="farrow-lbl">deal closed &mdash; system fires two actions simultaneously</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // REPAIR EXPERIENCE BLOCK
+    '<div class="layer-lbl">The repair experience &mdash; where trust is built or lost</div>'+
+    '<div class="repair-exp-block">'+
+      '<div class="rep-exp-title">What happens during the repair determines everything that follows</div>'+
+      '<div class="rep-exp-sub">Reviews, referrals, repeat business, and DRP standing are all direct outputs of the repair experience. This is where marketing promises are kept or broken.</div>'+
+      '<div class="rep-exp-grid">'+
+        '<div class="rep-exp-item"><div class="rep-exp-ic">⭐</div><div class="rep-exp-nm">Excellent customer service</div><div class="rep-exp-s">Proactive updates at every milestone. Staff who answer questions clearly. No surprises.</div></div>'+
+        '<div class="rep-exp-item"><div class="rep-exp-ic">🔧</div><div class="rep-exp-nm">Quality certified repair</div><div class="rep-exp-s">OEM certifications, trained technicians, lifetime workmanship warranty on every job.</div></div>'+
+        '<div class="rep-exp-item"><div class="rep-exp-ic">⏱</div><div class="rep-exp-nm">Fast turnaround time</div><div class="rep-exp-s">Accurate timelines, parts pre-ordered, no unnecessary delays. Rental period respected.</div></div>'+
+        '<div class="rep-exp-item"><div class="rep-exp-ic">📋</div><div class="rep-exp-nm">Transparent process</div><div class="rep-exp-s">Walkaround video at drop-off. Plain-language repair summary at pickup. No hidden charges.</div></div>'+
+        '<div class="rep-exp-item"><div class="rep-exp-ic">🚗</div><div class="rep-exp-nm">Clean vehicle delivery</div><div class="rep-exp-s">Car returned washed and vacuumed. Before/after photos sent by SMS at pickup.</div></div>'+
+        '<div class="rep-exp-item"><div class="rep-exp-ic">🏆</div><div class="rep-exp-nm">Insurer coordination</div><div class="rep-exp-s">All supplements handled directly with the insurer. Customer never has to chase approvals.</div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="farrow"><div class="farrow-lbl">exceptional experience generates reviews, referrals, and repeat business</div><div class="farrow-ic">&#8595;</div></div>'+
+
+    // POST-SERVICE LOOP
+    '<div class="layer-lbl">Post-service loop &mdash; closed deals grow future demand</div>'+
+    '<div class="ps-loop">'+
+      '<div class="ps-title">&#x21BA; Reputation & referral growth loop</div>'+
+      '<div class="ps-steps">'+
+        psSteps.map(function(s,i){
+          return '<div class="ps-step">'+s+'</div>'+(i<psSteps.length-1?'<div class="ps-step-arr">&#8594;</div>':'')
+        }).join('')+
+      '</div>'+
+      '<div class="ps-loop-note">loops back into acquisition sources &mdash; reducing paid media cost over time</div>'+
+    '</div>'+
+
+    // OUTCOME FLOW
+    '<div class="layer-lbl">Outcome flow &mdash; what happens when a deal closes</div>'+
+    '<div class="outcome-flow">'+
+      ofSteps.map(function(s,i){
+        return '<div class="of-step'+(s.h?' highlight':'')+'">'+s.t+'</div>'+(i<ofSteps.length-1?'<div class="of-arr">&#8594;</div>':'')
+      }).join('')+
+    '</div>';
+}
+
+function renderJourney(){
+  document.getElementById('stageNav').innerHTML=stages.map(function(s,i){
+    return '<div class="snav '+(i===activeStage?'a':i<activeStage?'d':'')+'" onclick="setStage('+i+')"><span class="sn-dot">'+s.num+'</span>'+s.name+'</div>'
+  }).join('');
+  var s=stages[activeStage];
+  document.getElementById('stageContent').innerHTML=
+    '<div class="s-title">'+s.full+'</div>'+
+    '<div class="s-desc">'+s.desc+'</div>'+
+    '<div class="emo-b" style="'+emoMap[s.emo]+'">'+s.emotion+'</div>'+
+    '<div class="two-col">'+
+    '<div class="scard">'+
+      '<div class="scl">Customer perspective</div>'+
+      '<div class="ssl"><span class="ssl-dot" style="background:#2a4a7a"></span>What they are doing</div>'+
+      '<ul class="sitems">'+s.actions.map(function(a){return '<li>'+a+'</li>'}).join('')+'</ul>'+
+      '<div class="ssl"><span class="ssl-dot" style="background:#e94560"></span>Pain points</div>'+
+      '<ul class="sitems pain">'+s.pains.map(function(p){return '<li>'+p+'</li>'}).join('')+'</ul>'+
+    '</div>'+
+    '<div class="scard">'+
+      '<div class="scl">ACX marketing activities</div>'+
+      s.activities.map(function(a){return '<div class="mact"><div class="mact-n">'+a.n+'</div><div class="mact-d">'+a.d+'</div></div>'}).join('')+
+      '<div class="track-b2"><div class="tb-l">Tracking touchpoint</div><div class="tb-t">'+stageTrack[activeStage]+'</div></div>'+
+      '<div class="wow-b"><div class="wow-l">Wow moment</div><div class="wow-t">'+s.wow+'</div></div>'+
+      '<div class="chs-row">'+s.channels.map(function(c){return '<span class="ch-pill">'+c+'</span>'}).join('')+'</div>'+
+    '</div>'+
+    '</div>'+
+    '<div class="snav-row">'+
+      '<button class="snb" onclick="setStage(activeStage-1)"'+(activeStage===0?' disabled':'')+'>Previous</button>'+
+      '<span class="s-cnt">Stage '+(activeStage+1)+' of '+stages.length+'</span>'+
+      '<button class="snb pr" onclick="setStage(activeStage+1)"'+(activeStage===7?' disabled':'')+'>Next stage</button>'+
+    '</div>';
+}
+
+function setStage(i){if(i<0||i>7)return;activeStage=i;renderJourney()}
+function jumpStage(i){activeStage=i;renderJourney();document.getElementById('journey').scrollIntoView({behavior:'smooth'})}
+
+function renderTracking(){
+  document.getElementById('trackingContent').innerHTML=
+    '<div class="crm-box"><div class="crm-t">CRM &mdash; all channels converge here</div>'+
+    '<div class="crm-grid">'+[['📥','Lead auto-created with source info'],['🎙','Call recording attached automatically'],['✅','Manager marks: lead / not a lead'],['💵','Deal value and margin entered at close'],['📁','Full customer history in one place'],['🔁','Closed deals sent back to Google Ads']].map(function(x){return '<div class="crm-item"><span>'+x[0]+'</span><span>'+x[1]+'</span></div>'}).join('')+'</div></div>'+
+    '<div class="layer-lbl" style="margin-bottom:10px">Source tracking setup</div>'+
+    '<div style="overflow-x:auto;margin-bottom:18px"><table class="trk-table"><thead><tr><th>Source</th><th>How we track it</th><th>Accuracy</th></tr></thead><tbody>'+
+    trackingSetup.map(function(r){return '<tr><td>'+r.src+'</td><td>'+r.method+'</td><td><span class="ab" style="background:'+r.ac+'18;color:'+r.ac+'">'+r.acc+'</span></td></tr>'}).join('')+
+    '</tbody></table></div>'+
+    '<div class="insight-box">Every source gets a <span style="color:#00d4aa">unique identifier</span>. Every call hits <span style="color:#00d4aa">call tracking</span>, logging the source automatically. Every form fill carries <span style="color:#00d4aa">UTM parameters</span>. Every lead lands in the <span style="color:#a855f7">CRM with source tagged</span>. Every closed deal is pushed to <span style="color:#4285F4">Google Ads and Meta</span> as an offline conversion. The result: both algorithms optimize toward revenue, and you see <span style="color:#f5a623">exactly which channels and sources generate actual jobs</span> &mdash; not just clicks or calls.</div>';
+}
+
+function renderBrand(){
+  var baChannels=[
+    {ic:'📻',nm:'Terrestrial radio',ex:'Pattison, Rogers, Rawlco',proxy:'Dedicated vanity number per station',lift:'Branded search volume + call volume baseline in market',attr:'Approx.',note:''},
+    {ic:'🎵',nm:'Spotify & streaming audio',ex:'Spotify Audience Network',proxy:'UTM-tagged landing page via in-app CTA card',lift:'Click-through tracked directly via UTM + pixel',attr:'Exact',note:'Minimum spend thresholds apply'},
+    {ic:'📡',nm:'iHeart DAI / Digital audio',ex:'Bell Media, iHeart Radio',proxy:'Companion banner URL + dedicated landing page',lift:'Companion clicks tracked. Audio impressions via platform report',attr:'Partial',note:'5x monthly frequency standard for new market intro'},
+    {ic:'🖥',nm:'DOOH / Digital billboards',ex:'Outfront, Lamar, Pattison OOH',proxy:'QR code + vanity URL on creative',lift:'Geofencing: devices exposed near board matched to GBP visit or call',attr:'Approx.',note:'Creative must be readable at driving speed'},
+    {ic:'🎬',nm:'YouTube / Pre-roll video',ex:'Google Video campaigns',proxy:'UTM parameters + YouTube pixel',lift:'View-through conversions + branded search uplift',attr:'Partial',note:''},
+    {ic:'📺',nm:'Connected TV (CTV)',ex:'Bell, Rogers streaming inventory',proxy:'Dedicated landing page per campaign',lift:'Branded search growth in market during flight',attr:'Approx.',note:''},
+    {ic:'📱',nm:'Meta brand awareness',ex:'Facebook, Instagram reach campaigns',proxy:'Meta pixel + offline conversion upload',lift:'Reach, frequency, and brand recall surveys in Meta Ads Manager',attr:'Partial',note:'Can layer brand + retargeting in same platform'},
+    {ic:'🎙',nm:'Podcast sponsorships',ex:'Local and industry podcasts',proxy:'Unique promo code or vanity URL',lift:'Promo code redemptions + branded search in market',attr:'Approx.',note:''},
+    {ic:'🤝',nm:'Community & events',ex:'Local sponsorships, trade shows',proxy:'Staff logs at intake + referral tracking',lift:'Brand recall surveys + walk-in source tracking',attr:'Manual',note:''},
+    {ic:'📰',nm:'PR / Earned media',ex:'Local news, industry press',proxy:'Backlinks tracked in Search Console',lift:'Branded search spike following coverage',attr:'Approx.',note:''},
+  ];
+  var liftMetrics=[
+    {ic:'🔍',nm:'Branded search volume',body:'Track "ACX collision" and "ACX auto" query volume in Google Search Console. The most sensitive and fastest indicator that brand recall is building in a market.'},
+    {ic:'📍',nm:'Google Business Profile impressions',body:'Monitor the ratio of branded vs. category-triggered impressions in GBP Insights. A successful brand campaign shifts this ratio toward branded intent over time.'},
+    {ic:'📞',nm:'Call volume baseline',body:'Weekly inbound call volume from the dedicated market number. Sustained growth during and after a campaign flight is a measurable lift signal.'},
+    {ic:'🌐',nm:'Direct and branded organic traffic',body:'GA4 direct sessions and organic sessions from branded queries in the campaign market. People who heard the spot and typed the URL or searched the brand name.'},
+    {ic:'📊',nm:'Market vs. control comparison',body:'Run brand campaigns in one ACX market but not a comparable one. The difference in branded search and call volume between the two markets is the cleanest attribution signal available.'},
+    {ic:'⭐',nm:'DRP selection rate',body:'Where insurers share preferred-list data: track the percentage of list placements that result in ACX being chosen. Brand campaigns in a market should increase this rate over time.'},
+  ];
+
+  document.getElementById('brandContent').innerHTML=
+    '<div class="layer-lbl">Why brand awareness cannot be measured like performance ads</div>'+
+    '<div class="principle-box-ba" style="margin-bottom:12px">Brand awareness channels do not produce a direct click-to-conversion path. A customer who hears ACX on the radio on Monday, searches on Wednesday, and calls on Friday will appear in the call tracking report as an organic or Google search lead. The radio spot will show zero attributed conversions. This is not a failure of the channel &mdash; it is how brand works. The measurement job is to prove that brand spend raises the floor of all other channels: more branded search, higher Google Business Profile impressions, better DRP selection rate, and lower cost-per-lead across performance channels. Measuring brand by last-click attribution is like judging a foundation by how much it sticks out above ground.</div>'+
+
+    '<div class="layer-lbl">Brand awareness channels &mdash; how we run them and how we measure lift</div>'+
+    '<div class="ch-row-ba">'+baChannels.map(function(c){
+      return '<div class="ch-box-ba" style="cursor:default">'+
+        '<span class="ch-ic-ba">'+c.ic+'</span>'+
+        '<div class="ch-nm-ba">'+c.nm+'</div>'+
+        '<div class="ch-ex-ba" style="margin-bottom:5px">'+c.ex+'</div>'+
+        '<div style="font-size:10px;color:var(--t4);margin-bottom:2px"><span style="color:var(--t3);font-weight:600">Proxy: </span>'+c.proxy+'</div>'+
+        '<div style="font-size:10px;color:var(--t4);margin-bottom:2px"><span style="color:var(--t3);font-weight:600">Lift signal: </span>'+c.lift+'</div>'+
+        '<div style="font-size:10px;display:inline-block;padding:1px 7px;border-radius:8px;margin-top:3px;background:'+(c.attr==='Exact'?'rgba(0,212,170,.12)':c.attr==='Partial'?'rgba(245,166,35,.12)':'rgba(136,136,136,.12)')+';color:'+(c.attr==='Exact'?'#00d4aa':c.attr==='Partial'?'#f5a623':'#888')+'">'+c.attr+'</div>'+
+        (c.note?'<div style="font-size:9px;color:var(--danger);margin-top:4px">'+c.note+'</div>':'')+
+      '</div>'
+    }).join('')+'</div>'+
+
+    '<div class="layer-lbl" style="margin-top:14px">How to measure brand lift &mdash; the only valid methodology for offline channels</div>'+
+    '<div class="lift-steps-ba">'+
+      '<div class="lift-step-ba"><div class="lift-n-ba">1</div><div><div class="lift-t-ba">Establish a baseline before launch</div><div class="lift-s-ba">Export 90 days of data before the campaign starts: branded search volume in Search Console, Google Business Profile impressions, weekly call volume, and direct site traffic. This is the zero line everything is measured against.</div></div></div>'+
+      '<div class="lift-step-ba"><div class="lift-n-ba">2</div><div><div class="lift-t-ba">Run the campaign in one market, hold a second as control</div><div class="lift-s-ba">Launch brand activity in Winnipeg but not Brandon, or in Saskatoon but not Regina. The second market acts as a control group to isolate the campaign effect from seasonal or external changes.</div></div></div>'+
+      '<div class="lift-step-ba"><div class="lift-n-ba">3</div><div><div class="lift-t-ba">Track the same metrics weekly during the flight</div><div class="lift-s-ba">Branded search volume, Google Business Profile impressions, direct traffic, and inbound call volume — measured week by week in both the campaign market and the control market.</div></div></div>'+
+      '<div class="lift-step-ba"><div class="lift-n-ba">4</div><div><div class="lift-t-ba">Calculate incremental lift</div><div class="lift-s-ba">Lift = (campaign market metric during flight) minus (campaign market metric pre-flight), adjusted for any change visible in the control market during the same period. This delta is what the brand campaign produced.</div></div></div>'+
+      '<div class="lift-step-ba"><div class="lift-n-ba">5</div><div><div class="lift-t-ba">Report lift alongside ROAS from performance channels</div><div class="lift-s-ba">Add a brand lift row to the monthly dashboard: "Winnipeg branded search +28% during radio flight. Google Business Profile impressions +19%. Call volume baseline +12%." Not ROAS — lift. The two measurement systems sit side by side.</div></div></div>'+
+    '</div>'+
+
+    '<div class="layer-lbl" style="margin-top:14px">Key metrics to track during and after brand campaigns</div>'+
+    '<div class="metrics-row-ba">'+
+      liftMetrics.map(function(m){
+        return '<div class="metric-box-ba"><span class="metric-ic-ba">'+m.ic+'</span><div class="metric-nm-ba">'+m.nm+'</div><div class="metric-sub-ba">'+m.body+'</div></div>'
+      }).join('')+
+    '</div>';
+}
+
+function renderDRP(){
+  var directSteps=[
+    {n:'1',t:'Accident occurs',s:'Customer calls their insurer to open a claim'},
+    {n:'2',t:'Adjuster opens claim',s:'Insurer identifies vehicle type and repair requirements'},
+    {n:'3',t:'First-call assignment',s:'Adjuster directly books the customer into a tier-1 DRP shop — no list given'},
+    {n:'4',t:'Customer confirms',s:'Most customers in stress accept the recommendation without questioning it'},
+  ];
+  var listSteps=[
+    {n:'1',t:'Accident occurs',s:'Customer calls their insurer to open a claim'},
+    {n:'2',t:'Adjuster opens claim',s:'Multiple preferred shops exist in the area — list is given'},
+    {n:'3',t:'Customer receives list',s:'2 to 5 preferred shop names provided — customer must choose'},
+    {n:'4',t:'Customer researches',s:'68% check online reviews and reputation before deciding'},
+    {n:'5',t:'Customer selects ACX',s:'Brand recognition + strong Google Business Profile = selection'},
+  ];
+  var salesStages=[
+    {ic:'📞',nm:'Call answered',body:'Customer calls ACX after selecting from the list',risk:false,tag:''},
+    {ic:'⏱',nm:'Response time',body:'If call is missed — no callback within 5 min loses the lead to the next shop on the list',risk:true,tag:'Drop-off risk'},
+    {ic:'🗣',nm:'First conversation',body:'Staff confirms they handle insurer directly, sets timeline expectation',risk:true,tag:'Conversion moment'},
+    {ic:'📅',nm:'Appointment booked',body:'Drop-off scheduled. SMS confirmation sent immediately',risk:true,tag:'Friction point'},
+    {ic:'🚗',nm:'Drop-off',body:'Customer arrives. Intake experience confirms or breaks their confidence',risk:true,tag:'Trust moment'},
+    {ic:'🔧',nm:'Repair & updates',body:'Proactive milestone SMS keeps customer engaged and prevents cancellation',risk:false,tag:''},
+    {ic:'✅',nm:'Pickup & close',body:'Clean car, walkthrough, before/after photos — advocacy created',risk:false,tag:''},
+  ];
+  var takeaways=[
+    {t:'DRP agreement opens the door — it does not close the deal',s:'Being on an insurer\'s preferred list guarantees you appear in the consideration set. It does not guarantee the customer picks you. That decision happens after the list is given.'},
+    {t:'Brand awareness directly increases DRP selection rate',s:'When a customer sees ACX on a list alongside two unknown names, prior exposure to ACX on radio, DOOH, or digital audio creates recognition that tips the decision. This is measurable through selection rate tracking per insurer.'},
+    {t:'68% of customers verify online reputation before calling',s:'A weak Google Business Profile — below 4.5 stars, under 100 reviews, or unanswered negative reviews — loses the customer at the research stage even after the insurer has recommended the shop.'},
+    {t:'The sales process after the call is where most shops fail',s:'Getting on the list and being recognized is not enough. A missed call, a slow callback, a poor first conversation, or a friction-heavy intake can lose the customer at any point in the funnel. Every stage from first contact to drop-off has measurable drop-off risk.'},
+  ];
+
+  document.getElementById('drpContent').innerHTML=
+    '<div class="layer-lbl">Two paths in the DRP funnel &mdash; only one requires no marketing effort</div>'+
+    '<div class="drp-path-split">'+
+      '<div class="drp-path path-direct">'+
+        '<div class="drp-path-badge" style="background:rgba(255,255,255,.06);color:var(--t3)">Path A</div>'+
+        '<div class="drp-path-title" style="color:var(--t2)">First-call assignment</div>'+
+        '<div class="drp-path-desc">Adjuster books the customer directly into a specific shop. No list is given. Customer rarely pushes back. This path requires no marketing from the shop — only a strong insurer relationship and operational reliability.</div>'+
+        '<div class="drp-path-steps">'+directSteps.map(function(s){return '<div class="drp-ps"><div class="drp-ps-n" style="background:rgba(255,255,255,.07);color:var(--t3)">'+s.n+'</div><div><div class="drp-ps-t">'+s.t+'</div><div class="drp-ps-s">'+s.s+'</div></div></div>'}).join('')+'</div>'+
+      '</div>'+
+      '<div class="drp-path path-list">'+
+        '<div class="drp-path-badge" style="background:rgba(255,0,0,.12);color:var(--acx)">Path B &mdash; most common</div>'+
+        '<div class="drp-path-title" style="color:var(--t1)">Customer receives a list and chooses</div>'+
+        '<div class="drp-path-desc">Insurer presents 2 to 5 preferred shops. Customer must select one. This is where brand awareness, online reputation, and the sales process determine whether ACX wins or loses the job.</div>'+
+        '<div class="drp-path-steps">'+listSteps.map(function(s){return '<div class="drp-ps" style="border-color:rgba(255,0,0,.15)"><div class="drp-ps-n" style="background:rgba(255,0,0,.12);color:var(--acx)">'+s.n+'</div><div><div class="drp-ps-t">'+s.t+'</div><div class="drp-ps-s">'+s.s+'</div></div></div>'}).join('')+'</div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="drp-key-moment">'+
+      '<div class="dkm-title">&#9733; The reputation check moment &mdash; step 4 on Path B</div>'+
+      '<div class="dkm-stat">'+
+        '<div class="dkm-stat-n">68%</div>'+
+        '<div class="dkm-stat-l">of customers check online reviews and reputation before choosing a collision shop from a preferred list &mdash; even when the insurer has already recommended it</div>'+
+      '</div>'+
+      '<div class="dkm-grid">'+
+        '<div class="dkm-box" style="border-color:rgba(255,0,0,.2)">'+
+          '<div class="dkm-box-title" style="color:var(--acx)">What they check</div>'+
+          '<div class="dkm-box-body">Google rating and review count. Recent reviews mentioning insurance experience. Whether the shop has responded to negative reviews. Photo quality in the Google Business Profile.</div>'+
+        '</div>'+
+        '<div class="dkm-box" style="border-color:rgba(0,212,170,.2)">'+
+          '<div class="dkm-box-title" style="color:var(--green)">What wins at this moment</div>'+
+          '<div class="dkm-box-body">4.7+ rating with 200+ reviews. Recent reviews specifically mentioning the insurance process. Answered negative reviews. Brand name they already recognize from radio or DOOH.</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="layer-lbl">After selection &mdash; the sales funnel that most shops ignore</div>'+
+    '<div class="drp-sales-funnel">'+
+      '<div class="dsf-title">&#128222; From "I chose ACX" to "my car is fixed" &mdash; every stage has drop-off risk</div>'+
+      '<div class="dsf-sub">Winning the selection from the insurer list is not the end. The customer can still leave at any point between first contact and drop-off. Each stage below is a conversion moment.</div>'+
+      '<div class="dsf-stages">'+salesStages.map(function(s){
+        return '<div class="dsf-stage'+(s.risk?' risk':' ok')+'">'+
+          '<span class="dsf-icon">'+s.ic+'</span>'+
+          '<div class="dsf-nm">'+s.nm+'</div>'+
+          '<div class="dsf-body">'+s.body+'</div>'+
+          (s.risk&&s.tag?'<div class="dsf-risk-tag" style="background:rgba(233,69,96,.15);color:#e94560">'+s.tag+'</div>':'<div class="dsf-risk-tag" style="background:rgba(0,212,170,.1);color:#00d4aa">Operational</div>')+
+        '</div>'
+      }).join('')+
+      '</div>'+
+    '</div>'+
+
+    '<div class="layer-lbl">Key takeaways</div>'+
+    '<div class="drp-takeaway">'+
+      '<div class="drp-ta-title">Why DRP alone is not a marketing strategy</div>'+
+      '<div class="drp-ta-items">'+takeaways.map(function(t,i){
+        return '<div class="drp-ta-item"><div class="drp-ta-num">'+(i+1)+'</div><div><div class="drp-ta-t">'+t.t+'</div><div class="drp-ta-s">'+t.s+'</div></div></div>'
+      }).join('')+
+      '</div>'+
+    '</div>';
+}
+
+function updateNav(){
+  var ids=['overview','journey','tracking','brand','drp'];
+  var links=document.querySelectorAll('.nav-link');
+  var cur='overview';
+  ids.forEach(function(id){var el=document.getElementById(id);if(el&&window.scrollY+120>el.offsetTop)cur=id});
+  links.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+cur)});
+}
+window.addEventListener('scroll',updateNav,{passive:true});
+
+renderOverview();renderJourney();renderTracking();renderBrand();renderDRP();
+</script>
+</body>
+</html>
